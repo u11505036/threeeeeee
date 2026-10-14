@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>資優教育三大充實理論｜互動實驗室</title>
+<style>
+:root{
+  --bg:#f5f6f8; --paper:#fff; --ink:#1b2430; --muted:#6b7280; --line:#dfe4ea;
+  --deep:#111827; --soft:#eef1f5; --ok:#e9f7ef; --warn:#fff4df; --bad:#fff0f0;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  line-height:1.65;
+}
+button,select,input,textarea{font:inherit}
+button{cursor:pointer}
+.wrap{max-width:1180px;margin:auto;padding:20px 16px 80px}
+.hero{
+  border:1px solid var(--line);border-radius:28px;padding:30px;background:
+  radial-gradient(circle at 88% 12%,rgba(255,255,255,.95),transparent 30%),
+  linear-gradient(145deg,#fff,#edf1f5);
+}
+.eyebrow{font-size:.8rem;font-weight:900;letter-spacing:.12em;color:#687385;text-transform:uppercase}
+h1{font-size:clamp(2.2rem,6vw,4.8rem);line-height:1.02;letter-spacing:-.045em;margin:.4rem 0 1rem}
+h2{font-size:clamp(1.55rem,3vw,2.3rem);line-height:1.2;margin:0 0 10px}
+h3{margin:.15rem 0 .5rem}
+p{margin:.55rem 0}
+.lead{max-width:900px;font-size:1.08rem;color:#394556}
+.muted{color:var(--muted)}
+.small{font-size:.88rem;color:var(--muted)}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.nav a{text-decoration:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 11px;font-weight:800}
+section{margin-top:26px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tag{display:inline-block;background:#111827;color:#fff;border-radius:999px;padding:5px 9px;font-size:.78rem;font-weight:900}
+.kicker{font-weight:900}
+.callout{border-left:4px solid #111827;background:#f8fafc;border-radius:12px;padding:13px 15px;margin-top:12px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{border:0;border-radius:12px;background:#111827;color:#fff;padding:10px 13px;font-weight:900;min-height:44px}
+.btn.alt{background:#fff;color:#111827;border:1px solid var(--line)}
+.btn.soft{background:#eef1f5;color:#111827}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.choice{
+  border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;text-align:left;min-height:50px;font-weight:800
+}
+.choice.active{outline:3px solid #111827;background:#f1f3f5}
+.live{display:none;margin-top:12px;padding:13px;border-radius:13px;background:#eef2ff}
+.ok{background:var(--ok)!important}.warn{background:var(--warn)!important}.bad{background:var(--bad)!important}
+.progress-shell{margin-top:18px}
+.progress-track{height:10px;border-radius:999px;background:#e5e7eb;overflow:hidden}
+.progress-fill{height:100%;width:0;background:#111827;transition:width .25s ease}
+.stampbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.stamp{border:1px dashed #adb5bd;border-radius:999px;padding:7px 10px;font-weight:800;color:#8b949e;background:#fff}
+.stamp.done{border-style:solid;color:#111827;background:#edf1f5}
+.labhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.stepper{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.stepdot{padding:7px 10px;border-radius:999px;background:#eef1f5;color:#667085;font-size:.88rem;font-weight:900}
+.stepdot.on{background:#111827;color:#fff}
+.workspace{margin-top:14px;border:1px dashed #c7d0da;border-radius:18px;padding:16px;background:#fbfcfd}
+.profile{
+  display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:center
+}
+.avatar{
+  width:100px;height:100px;border-radius:24px;background:linear-gradient(145deg,#e4e7eb,#fff);
+  border:1px solid var(--line);display:grid;place-items:center;font-size:2.8rem;font-weight:900
+}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.chip{background:#f1f4f7;border:1px solid #e1e6eb;border-radius:10px;padding:6px 8px;font-size:.88rem}
+.slotgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.slot{
+  min-height:140px;border:2px dashed #cbd5df;border-radius:16px;padding:12px;background:#fafbfc
+}
+.slot strong{display:block;margin-bottom:8px}
+.card{
+  border:1px solid var(--line);background:#fff;border-radius:13px;padding:10px 11px;margin:7px 0;font-weight:800;
+  user-select:none
+}
+.card[draggable="true"]{cursor:grab}
+.card.selected{outline:3px solid #111827}
+.scoreline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.meter{flex:1;min-width:130px;height:9px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+.meter>span{display:block;height:100%;width:0;background:#111827;transition:width .25s ease}
+.path{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px
+}
+.node{border:1px solid var(--line);border-radius:16px;padding:13px;background:#fff;opacity:.42}
+.node.open{opacity:1;outline:2px solid #111827}
+.node.done{opacity:1;background:#eef2f7}
+.idea-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.idea-col{border:1px solid var(--line);border-radius:15px;padding:10px;background:#fff;min-height:150px}
+textarea{width:100%;min-height:72px;border:1px solid var(--line);border-radius:12px;padding:10px;resize:vertical}
+.research-canvas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.field{border:1px solid var(--line);border-radius:14px;padding:11px;background:#fff}
+.field label{display:block;font-weight:900;margin-bottom:6px}
+.field input,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}
+.matrix-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}
+.matrix{display:grid;grid-template-columns:150px repeat(5,150px);gap:1px;background:#dfe4ea;min-width:900px}
+.matrix>div{background:#fff;padding:10px;min-height:78px}
+.matrix .head{background:#f3f4f6;font-weight:900}
+.matrix .side{background:#f8fafc;font-weight:900;position:sticky;left:0;z-index:2}
+.matrix .cell{cursor:pointer}
+.matrix .cell.on{background:#e8edf3;font-weight:900}
+.recipe{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.recipe .box{border:1px solid var(--line);border-radius:14px;padding:11px;background:#fff}
+.balance{display:grid;grid-template-columns:100px 1fr 44px;gap:8px;align-items:center;margin:8px 0}
+.compare-deck{display:grid;grid-template-columns:1fr 280px;gap:16px;align-items:start}
+.casecard{border:1px solid var(--line);border-radius:18px;padding:18px;background:#fff;min-height:220px}
+.case-meta{font-size:.82rem;font-weight:900;color:#6b7280;letter-spacing:.08em;text-transform:uppercase}
+.vote{display:grid;gap:9px}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:16px}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f7f9fb}
+.passport{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.passport .p{border:1px solid var(--line);border-radius:15px;padding:12px;background:#fff;text-align:center}
+.passport .icon{font-size:1.7rem;filter:grayscale(1);opacity:.35}
+.passport .p.done .icon{filter:none;opacity:1}
+.qrgrid{display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:center}
+#qr{width:200px;height:200px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:8px}
+.urlrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.urlrow input{flex:1;min-width:260px;border:1px solid var(--line);border-radius:12px;padding:10px}
+footer{text-align:center;color:#6b7280;font-size:.9rem;margin-top:30px}
+@media(max-width:880px){
+  .g2,.g3,.slotgrid,.path,.idea-board,.research-canvas,.recipe,.passport,.qrgrid,.compare-deck{grid-template-columns:1fr}
+  .profile{grid-template-columns:1fr}.avatar{width:100%;height:90px}
+  #qr{width:180px;height:180px}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <header class="hero">
+    <div class="eyebrow">Gifted Education · Interactive Lab</div>
+    <h1>三大充實理論<br>真的拿來「操作」</h1>
+    <p class="lead">
+      這不是把課本搬進網站。每一套理論都有不同的操作手感：
+      阮儒林是「判讀學生 → 選路徑」；普渡是「逐階練技能 → 解鎖研究」；
+      矩陣是「把課程零件重新組裝」。做完三個實驗室後，再進比較關。
+    </p>
+
+    <div class="progress-shell">
+      <div class="scoreline">
+        <strong>整體進度</strong>
+        <div class="meter"><span id="masterBar"></span></div>
+        <strong id="masterPct">0%</strong>
+      </div>
+      <div class="stampbar">
+        <span class="stamp" id="stampR">Renzulli 未完成</span>
+        <span class="stamp" id="stampP">Purdue 未完成</span>
+        <span class="stamp" id="stampT">Matrix 未完成</span>
+        <span class="stamp" id="stampC">比較關 未完成</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#student">共同學生</a>
+      <a href="#renzulli">阮儒林</a>
+      <a href="#purdue">普渡</a>
+      <a href="#matrix">矩陣</a>
+      <a href="#compare">比較關</a>
+      <a href="#qrsec">QR Code</a>
+    </nav>
+  </header>
+
+  <section id="student">
+    <div class="panel">
+      <div class="profile">
+        <div class="avatar">宇</div>
+        <div>
+          <h2>共同學生：小宇</h2>
+          <p>國二，對「校園環境、數據、地圖」特別有興趣；普通課堂中常比同儕更快完成，但研究方法與時間管理還沒有完全成熟。</p>
+          <div class="chips">
+            <span class="chip">數理能力高</span>
+            <span class="chip">問題很多</span>
+            <span class="chip">創意點子多</span>
+            <span class="chip">重複練習容易失去投入</span>
+            <span class="chip">研究工具尚未完整</span>
+          </div>
+          <div class="callout">
+            三套模式都處理「資優學生如何被充實」，但真正不同的是：
+            <strong>它們各自把「設計決策」放在哪裡。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="renzulli">
+    <div class="panel">
+      <div class="labhead">
+        <div>
+          <span class="tag">LAB 01 · RENZULLI</span>
+          <h2>阮儒林：你是「路徑設計者」</h2>
+          <p class="muted">不是把 Type I/II/III 背出來，而是根據學生證據做決策。</p>
+        </div>
+        <div class="stepper">
+          <span class="stepdot on" id="rstep1">辨識</span>
+          <span class="stepdot" id="rstep2">濃縮</span>
+          <span class="stepdot" id="rstep3">路徑</span>
+          <span class="stepdot" id="rstep4">Type III</span>
+        </div>
+      </div>
+
+      <div class="grid g2">
+        <div class="workspace">
+          <div class="kicker">① 把學生證據放進三環</div>
+          <p class="small">可拖曳；手機也可先點證據卡，再點目標欄位。</p>
+
+          <div id="rEvidence">
+            <div class="card" draggable="true" data-type="ability">數學與自然評量表現長期高於年級平均</div>
+            <div class="card" draggable="true" data-type="creativity">常提出課本之外的新假設與替代解法</div>
+            <div class="card" draggable="true" data-type="task">遇到自己有興趣的題目會連續追資料好幾天</div>
+          </div>
+
+          <div class="slotgrid" id="rSlots">
+            <div class="slot" data-slot="ability"><strong>中等以上能力</strong><div class="small">把相符證據放這裡</div></div>
+            <div class="slot" data-slot="creativity"><strong>創造力</strong><div class="small">把相符證據放這裡</div></div>
+            <div class="slot" data-slot="task"><strong>工作投入</strong><div class="small">把相符證據放這裡</div></div>
+          </div>
+          <div id="rTriadResult" class="live"></div>
+        </div>
+
+        <div class="workspace">
+          <div class="kicker">② 課程濃縮：把已會的東西「拿掉」</div>
+          <p>請選出最合理的處理：</p>
+          <div class="grid g2">
+            <button class="choice" data-rcompact="good">前測已熟練單元，減少重複練習，把時間讓給充實活動</button>
+            <button class="choice" data-rcompact="bad">因為他很快，就再給他兩倍同類型作業</button>
+            <button class="choice" data-rcompact="good">保留必要核心目標，但縮短已掌握內容</button>
+            <button class="choice" data-rcompact="bad">直接把所有普通課程全部取消</button>
+          </div>
+          <button type="button" class="btn" id="rCompactCheck">檢查濃縮決策</button>
+          <div id="rCompactResult" class="live"></div>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <div class="kicker">③ 選路徑：把三張任務送到 Type I / II / III</div>
+        <div id="rTaskBank">
+          <div class="card" draggable="true" data-answer="I">參訪氣象站、聽城市熱島專家短講，找出自己真正想追的方向</div>
+          <div class="card" draggable="true" data-answer="II">練訪談、資料圖表、時間排程與研究倫理</div>
+          <div class="card" draggable="true" data-answer="III">真正研究校園哪裡最熱，做出熱點地圖並向行政單位提出改善建議</div>
+        </div>
+        <div class="slotgrid" id="rTypes">
+          <div class="slot" data-slot="I"><strong>Type I｜一般探索</strong></div>
+          <div class="slot" data-slot="II"><strong>Type II｜團體訓練</strong></div>
+          <div class="slot" data-slot="III"><strong>Type III｜真實問題探究</strong></div>
+        </div>
+        <div id="rTypeResult" class="live"></div>
+      </div>
+
+      <div class="workspace" id="rProject" style="display:none">
+        <div class="kicker">④ Type III 專案控制台</div>
+        <p>四個環節都完成，才算真正把 Type III 做完整。</p>
+        <div class="research-canvas">
+          <div class="field">
+            <label>問題釐清</label>
+            <select id="rQuestion">
+              <option value="">請選</option>
+              <option>校園哪三個地點在中午最熱？</option>
+              <option>為什麼學校很熱？</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>方法學</label>
+            <select id="rMethod">
+              <option value="">請選</option>
+              <option>固定時段量測＋地表材質紀錄</option>
+              <option>只憑感覺判斷</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>時間管理</label>
+            <select id="rTime">
+              <option value="">請選</option>
+              <option>1週試測＋2週正式蒐集＋1週整理</option>
+              <option>全部最後一天做</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>成果呈現</label>
+            <select id="rOutput">
+              <option value="">請選</option>
+              <option>熱點地圖＋數據圖＋改善建議</option>
+              <option>只交一張心得</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="btn" id="rProjectCheck">送出 Type III 設計</button>
+        <div id="rProjectResult" class="live"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="purdue">
+    <div class="panel">
+      <div class="labhead">
+        <div>
+          <span class="tag">LAB 02 · PURDUE</span>
+          <h2>普渡：你是「技能關卡設計者」</h2>
+          <p class="muted">這套要有很明顯的「前一階段是後一階段的工具」的感覺。</p>
+        </div>
+        <div class="stepper">
+          <span class="stepdot on" id="pstep1">基本思考</span>
+          <span class="stepdot" id="pstep2">創造解題</span>
+          <span class="stepdot" id="pstep3">獨立研究</span>
+        </div>
+      </div>
+
+      <div class="path">
+        <div class="node open" id="pNode1">
+          <h3>Stage 1</h3>
+          <strong>基本思考技巧</strong>
+          <p class="small">觀察、比較、分類、推論。</p>
+        </div>
+        <div class="node" id="pNode2">
+          <h3>Stage 2</h3>
+          <strong>創造性問題解決</strong>
+          <p class="small">先打開可能性，再重組、收斂。</p>
+        </div>
+        <div class="node" id="pNode3">
+          <h3>Stage 3</h3>
+          <strong>獨立研究發展</strong>
+          <p class="small">自己定題、選方法、執行、產出。</p>
+        </div>
+      </div>
+
+      <div class="workspace" id="pLab1">
+        <div class="kicker">第一關｜把觀察資料整理成有意義的分類</div>
+        <p>小宇在校園記錄到：水泥地 36°C、草地 31°C、樹蔭 29°C、柏油 38°C。請選出最合理的第一步：</p>
+        <div class="grid g3">
+          <button class="choice" data-p1="bad">直接宣布「柏油一定最糟」</button>
+          <button class="choice" data-p1="good">先依地表材質／遮蔭條件分類，再比較溫度</button>
+          <button class="choice" data-p1="bad">先想一個漂亮結論再找資料支持</button>
+        </div>
+        <div id="p1Result" class="live"></div>
+      </div>
+
+      <div class="workspace" id="pLab2" style="display:none">
+        <div class="kicker">第二關｜真的玩一次「發散 → 重組 → 收斂」</div>
+        <div class="idea-board">
+          <div class="idea-col">
+            <strong>① 發散</strong>
+            <p class="small">先不要批評，輸入至少 3 個「為什麼某處更熱」的可能原因。</p>
+            <textarea id="pIdeas" placeholder="例如：沒有樹蔭、柏油吸熱、風不流通…"></textarea>
+          </div>
+          <div class="idea-col">
+            <strong>② 重組</strong>
+            <p class="small">選一個分類角度。</p>
+            <select id="pGroup">
+              <option value="">請選</option>
+              <option>自然環境／人工環境</option>
+              <option>可控制／不可控制</option>
+              <option>短期／長期改善</option>
+            </select>
+          </div>
+          <div class="idea-col">
+            <strong>③ 收斂</strong>
+            <p class="small">選一個最值得驗證的假設。</p>
+            <select id="pHyp">
+              <option value="">請選</option>
+              <option>遮蔭程度與地表溫度有明顯關係</option>
+              <option>反正就是天氣太熱</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="btn" id="p2Check">完成第二關</button>
+        <div id="p2Result" class="live"></div>
+      </div>
+
+      <div class="workspace" id="pLab3" style="display:none">
+        <div class="kicker">第三關｜獨立研究畫布</div>
+        <div class="research-canvas">
+          <div class="field"><label>研究題目</label><input id="pTitle" placeholder="自己命名"></div>
+          <div class="field"><label>資料來源</label><select id="pSource"><option value="">請選</option><option>現場量測＋觀察紀錄</option><option>只看網路留言</option></select></div>
+          <div class="field"><label>預計產出</label><select id="pOut"><option value="">請選</option><option>校園熱點地圖與改善建議</option><option>沒有產出</option></select></div>
+          <div class="field"><label>誰負責決策？</label><select id="pOwner"><option value="">請選</option><option>學生自己在教師支持下決定</option><option>全部由老師指定</option></select></div>
+        </div>
+        <button type="button" class="btn" id="p3Check">完成獨立研究設計</button>
+        <div id="p3Result" class="live"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="matrix">
+    <div class="panel">
+      <div class="labhead">
+        <div>
+          <span class="tag">LAB 03 · TANNENBAUM</span>
+          <h2>矩陣：你是「課程混音師」</h2>
+          <p class="muted">原學科不消失；你是在原課程上剪掉、拉深、外接、臨時加料。</p>
+        </div>
+      </div>
+
+      <div class="grid g2">
+        <div class="workspace">
+          <div class="kicker">① 先選核心學科</div>
+          <select id="mSubject">
+            <option>自然科學</option>
+            <option>數學</option>
+            <option>語文</option>
+            <option>社會科學</option>
+          </select>
+          <div class="callout">
+            核心不是「加越多越好」，而是讓<strong>知識內容、高層認知、社會／情意</strong>一起被設計。
+          </div>
+        </div>
+
+        <div class="workspace">
+          <div class="kicker">② 看你的課程是否失衡</div>
+          <div class="balance"><span>知識</span><div class="meter"><span id="mKnow"></span></div><strong id="mKnowN">0</strong></div>
+          <div class="balance"><span>認知</span><div class="meter"><span id="mCog"></span></div><strong id="mCogN">0</strong></div>
+          <div class="balance"><span>情意</span><div class="meter"><span id="mAff"></span></div><strong id="mAffN">0</strong></div>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <div class="kicker">③ 點矩陣格子「組課程」</div>
+        <div class="matrix-wrap">
+          <div class="matrix" id="mGrid">
+            <div class="head">發展面向</div>
+            <div class="head">精簡</div>
+            <div class="head">擴展</div>
+            <div class="head">計畫性增加</div>
+            <div class="head">臨時性增加</div>
+            <div class="head">校外增加</div>
+
+            <div class="side">知識內容</div>
+            <div class="cell" data-row="know" data-col="精簡">刪減已熟練內容</div>
+            <div class="cell" data-row="know" data-col="擴展">加入更深層概念</div>
+            <div class="cell" data-row="know" data-col="計畫性增加">預先安排專題</div>
+            <div class="cell" data-row="know" data-col="臨時性增加">追即時議題</div>
+            <div class="cell" data-row="know" data-col="校外增加">接專家／機構資源</div>
+
+            <div class="side">高層認知</div>
+            <div class="cell" data-row="cog" data-col="精簡">省下時間給高階任務</div>
+            <div class="cell" data-row="cog" data-col="擴展">比較／推論／評鑑</div>
+            <div class="cell" data-row="cog" data-col="計畫性增加">安排研究歷程</div>
+            <div class="cell" data-row="cog" data-col="臨時性增加">即時分析突發問題</div>
+            <div class="cell" data-row="cog" data-col="校外增加">取得專家回饋</div>
+
+            <div class="side">社會／情意</div>
+            <div class="cell" data-row="aff" data-col="精簡">降低重複造成的挫折</div>
+            <div class="cell" data-row="aff" data-col="擴展">加入倫理與價值討論</div>
+            <div class="cell" data-row="aff" data-col="計畫性增加">安排合作責任角色</div>
+            <div class="cell" data-row="aff" data-col="臨時性增加">回應班級真實事件</div>
+            <div class="cell" data-row="aff" data-col="校外增加">進入社區真實場域</div>
+          </div>
+        </div>
+
+        <div class="recipe">
+          <div class="box"><strong>你用了哪些方式</strong><div id="mCols" class="small">尚未選擇</div></div>
+          <div class="box"><strong>你發展哪些面向</strong><div id="mRows" class="small">尚未選擇</div></div>
+          <div class="box"><strong>課程風格</strong><div id="mStyle" class="small">等待配方</div></div>
+        </div>
+        <button type="button" class="btn" id="mFinish">完成我的矩陣課程</button>
+        <div id="mResult" class="live"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare">
+    <div class="panel">
+      <h2>比較關：三套理論到底「什麼時候該叫誰上場」？</h2>
+      <p class="muted">前面三個 Lab 完成後，這裡才真正有味道：你不是配名詞，而是在做教師決策。</p>
+
+      <div class="compare-deck">
+        <div class="casecard">
+          <div class="case-meta" id="caseMeta">CASE 1 / 4</div>
+          <h3 id="caseTitle">載入中</h3>
+          <p id="caseText"></p>
+          <div id="caseExplain" class="live"></div>
+        </div>
+        <div class="vote">
+          <button type="button" class="choice" data-vote="R">阮儒林｜選路徑</button>
+          <button type="button" class="choice" data-vote="P">普渡｜逐階解鎖</button>
+          <button type="button" class="choice" data-vote="T">矩陣｜組課程</button>
+          <button type="button" class="btn alt" id="nextCase" disabled>下一題</button>
+        </div>
+      </div>
+
+      <div class="tablewrap" style="margin-top:16px">
+        <table>
+          <thead><tr><th>面向</th><th>阮儒林</th><th>普渡</th><th>矩陣</th></tr></thead>
+          <tbody>
+            <tr><td>核心動作</td><td>依學生與任務選路徑</td><td>能力逐階發展</td><td>以原學科為核心重組課程</td></tr>
+            <tr><td>最像什麼</td><td>分流／導流系統</td><td>技能樹</td><td>課程混音台</td></tr>
+            <tr><td>最鮮明重點</td><td>Type III 真實問題探究</td><td>從基本思考到獨立研究</td><td>精簡、擴展、計畫／臨時／校外增加</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="workspace">
+        <div class="kicker">學習護照</div>
+        <div class="passport">
+          <div class="p" id="passR"><div class="icon">🧭</div><strong>路徑設計者</strong><div class="small">阮儒林</div></div>
+          <div class="p" id="passP"><div class="icon">🪜</div><strong>技能關卡設計者</strong><div class="small">普渡</div></div>
+          <div class="p" id="passT"><div class="icon">🎛️</div><strong>課程混音師</strong><div class="small">矩陣</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="qrsec">
+    <div class="panel qrgrid">
+      <div><img id="qr" alt="目前網站 QR Code"></div>
+      <div>
+        <h2>QR Code 分享</h2>
+        <p>丟到 GitHub Pages 後會自動抓目前網址；也可手動貼新網址。</p>
+        <div class="urlrow">
+          <input id="urlInput" aria-label="網站網址">
+          <button type="button" class="btn" id="qrUpdate">更新 QR</button>
+        </div>
+        <div id="qrMsg" class="small" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>三大充實理論互動實驗室｜定義 → 操作 → 決策 → 比較</footer>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById('app');
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = '1';
+
+  const state = {
+    R:false, P:false, T:false, C:false,
+    selectedCard:null,
+    rTriad:0, rCompact:false, rTypes:0,
+    caseIndex:0, caseLocked:false
+  };
+
+  function show(el, html, cls='live'){
+    el.className = cls;
+    el.innerHTML = html;
+    el.style.display = 'block';
+  }
+  function updateMaster(){
+    const done = [state.R,state.P,state.T,state.C].filter(Boolean).length;
+    const pct = done*25;
+    document.getElementById('masterBar').style.width = pct+'%';
+    document.getElementById('masterPct').textContent = pct+'%';
+    const map = {R:'Renzulli',P:'Purdue',T:'Matrix',C:'比較關'};
+    for (const k of Object.keys(map)){
+      const s = document.getElementById('stamp'+k);
+      s.classList.toggle('done', state[k]);
+      s.textContent = map[k] + (state[k] ? ' ✓' : ' 未完成');
+    }
+    document.getElementById('passR').classList.toggle('done',state.R);
+    document.getElementById('passP').classList.toggle('done',state.P);
+    document.getElementById('passT').classList.toggle('done',state.T);
+  }
+
+  // Accessible drag/click helper
+  let dragCard = null;
+  root.addEventListener('dragstart', e => {
+    const c = e.target.closest('.card[draggable="true"]');
+    if (!c) return;
+    dragCard = c;
+  });
+  root.addEventListener('dragover', e => {
+    if (e.target.closest('.slot')) e.preventDefault();
+  });
+  root.addEventListener('drop', e => {
+    const slot = e.target.closest('.slot');
+    if (!slot || !dragCard) return;
+    e.preventDefault();
+    placeCard(dragCard, slot);
+  });
+  root.addEventListener('click', e => {
+    const c = e.target.closest('.card[draggable="true"]');
+    if (c){
+      document.querySelectorAll('.card.selected').forEach(x=>x.classList.remove('selected'));
+      c.classList.add('selected'); state.selectedCard = c; return;
+    }
+    const slot = e.target.closest('.slot');
+    if (slot && state.selectedCard){
+      placeCard(state.selectedCard, slot);
+      state.selectedCard.classList.remove('selected'); state.selectedCard=null;
+    }
+  });
+
+  function placeCard(card, slot){
+    const parentId = slot.parentElement.id;
+    const expected = parentId === 'rSlots' ? card.dataset.type : card.dataset.answer;
+    const actual = slot.dataset.slot;
+    if (expected !== actual){
+      slot.animate?.([{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:220});
+      return;
+    }
+    slot.appendChild(card);
+    card.draggable = false;
+    card.classList.remove('selected');
+    card.style.cursor='default';
+    if (parentId === 'rSlots'){
+      state.rTriad++;
+      if(state.rTriad===3){
+        show(document.getElementById('rTriadResult'),'✅ 三環證據已放對：能力、創造力、工作投入不是抽象名詞，而是要從學生表現中辨識。','live ok');
+        document.getElementById('rstep2').classList.add('on');
+      }
+    } else if (parentId === 'rTypes'){
+      state.rTypes++;
+      if(state.rTypes===3){
+        show(document.getElementById('rTypeResult'),'✅ Type I＝打開興趣；Type II＝練工具；Type III＝真的拿工具去處理真問題。','live ok');
+        document.getElementById('rstep4').classList.add('on');
+        document.getElementById('rProject').style.display='block';
+      }
+    }
+  }
+
+  // Renzulli compacting
+  document.querySelectorAll('[data-rcompact]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      btn.classList.toggle('active');
+    });
+  });
+  document.getElementById('rCompactCheck').addEventListener('click',()=>{
+    const chosen=[...document.querySelectorAll('[data-rcompact].active')];
+    const good=chosen.length===2 && chosen.every(x=>x.dataset.rcompact==='good');
+    const el=document.getElementById('rCompactResult');
+    if(good){
+      state.rCompact=true;
+      show(el,'✅ 這才是「課程濃縮」：先確認已掌握，再把被省下的時間轉成真正的充實。','live ok');
+      document.getElementById('rstep3').classList.add('on');
+    } else show(el,'⚠️ 濃縮不是「多給作業」，也不是整套普通課程全部拔掉。','live warn');
+  });
+  document.getElementById('rProjectCheck').addEventListener('click',()=>{
+    const q=document.getElementById('rQuestion').value;
+    const m=document.getElementById('rMethod').value;
+    const t=document.getElementById('rTime').value;
+    const o=document.getElementById('rOutput').value;
+    const good = q.startsWith('校園哪') && m.startsWith('固定') && t.startsWith('1週') && o.startsWith('熱點');
+    const el=document.getElementById('rProjectResult');
+    if(good){
+      show(el,'✅ Type III 成立：問題釐清 → 方法學 → 時間管理 → 成果呈現。你完成的是一個真實探究流程，不只是「比較難的作業」。','live ok');
+      state.R=true; document.getElementById('rstep4').classList.add('on'); updateMaster();
+    }else show(el,'還差一點。檢查四個環節是不是都具有「可研究、可執行、可呈現」的品質。','live warn');
+  });
+
+  // Purdue
+  document.querySelectorAll('[data-p1]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const el=document.getElementById('p1Result');
+      if(btn.dataset.p1==='good'){
+        show(el,'✅ 第一關通過：先觀察、分類、比較，後面才能真的談問題解決。','live ok');
+        document.getElementById('pLab2').style.display='block';
+        document.getElementById('pNode1').classList.add('done');
+        document.getElementById('pNode2').classList.add('open');
+        document.getElementById('pstep2').classList.add('on');
+      }else show(el,'⚠️ 這還不是基本思考訓練。先把資料「看懂、整理、比較」，不要急著宣布結論。','live warn');
+    });
+  });
+  document.getElementById('p2Check').addEventListener('click',()=>{
+    const ideas=document.getElementById('pIdeas').value.split(/[\n、,，；;]/).map(x=>x.trim()).filter(Boolean);
+    const group=document.getElementById('pGroup').value;
+    const hyp=document.getElementById('pHyp').value;
+    const good=ideas.length>=3 && group && hyp.startsWith('遮蔭');
+    const el=document.getElementById('p2Result');
+    if(good){
+      show(el,'✅ 第二關通過：先發散，再重組，最後收斂到能驗證的假設。第三階段解鎖。','live ok');
+      document.getElementById('pLab3').style.display='block';
+      document.getElementById('pNode2').classList.add('done');
+      document.getElementById('pNode3').classList.add('open');
+      document.getElementById('pstep3').classList.add('on');
+    }else show(el,'⚠️ 要有三個元素：至少 3 個可能性、一次重組、最後一個可驗證假設。','live warn');
+  });
+  document.getElementById('p3Check').addEventListener('click',()=>{
+    const title=document.getElementById('pTitle').value.trim();
+    const source=document.getElementById('pSource').value;
+    const out=document.getElementById('pOut').value;
+    const owner=document.getElementById('pOwner').value;
+    const good=title.length>=4 && source.startsWith('現場') && out.startsWith('校園') && owner.startsWith('學生');
+    const el=document.getElementById('p3Result');
+    if(good){
+      show(el,'✅ 普渡三階段完成：基本思考不是目的，最後要變成學生能自己掌握的獨立研究能力。','live ok');
+      document.getElementById('pNode3').classList.add('done'); state.P=true; updateMaster();
+    }else show(el,'再檢查：獨立研究要有自己的題目、可信資料、實際產出，而且學生要真正擁有部分決策權。','live warn');
+  });
+
+  // Matrix
+  const mCells=[...document.querySelectorAll('#mGrid .cell')];
+  mCells.forEach(cell=>cell.addEventListener('click',()=>{
+    cell.classList.toggle('on'); updateMatrix();
+  }));
+  function updateMatrix(){
+    const on=mCells.filter(x=>x.classList.contains('on'));
+    const counts={know:0,cog:0,aff:0};
+    on.forEach(x=>counts[x.dataset.row]++);
+    const max=5;
+    [['know','mKnow','mKnowN'],['cog','mCog','mCogN'],['aff','mAff','mAffN']].forEach(([k,bar,n])=>{
+      document.getElementById(bar).style.width=(counts[k]/max*100)+'%';
+      document.getElementById(n).textContent=counts[k];
+    });
+    const cols=[...new Set(on.map(x=>x.dataset.col))];
+    const rows=[];
+    if(counts.know) rows.push('知識內容');
+    if(counts.cog) rows.push('高層認知');
+    if(counts.aff) rows.push('社會／情意');
+    document.getElementById('mCols').textContent=cols.length?cols.join('、'):'尚未選擇';
+    document.getElementById('mRows').textContent=rows.length?rows.join('、'):'尚未選擇';
+    let style='等待配方';
+    if(on.length){
+      if(counts.know && counts.cog && counts.aff) style='三面向都有：比較像完整矩陣課程';
+      else if(counts.know>=3 && !counts.aff) style='偏知識加量，情意面向不足';
+      else if(counts.cog>=2 && counts.aff>=1) style='高階思考＋情意整合';
+      else style='已有方向，但還可再平衡';
+    }
+    document.getElementById('mStyle').textContent=style;
+  }
+  document.getElementById('mFinish').addEventListener('click',()=>{
+    const on=mCells.filter(x=>x.classList.contains('on'));
+    const rows=new Set(on.map(x=>x.dataset.row));
+    const cols=new Set(on.map(x=>x.dataset.col));
+    const el=document.getElementById('mResult');
+    if(on.length>=4 && rows.size>=2 && cols.size>=2){
+      show(el,`✅ 矩陣成立：你沒有另開一套完全脫離原課程的活動，而是以「${document.getElementById('mSubject').value}」為核心，用 ${[...cols].join('、')} 等方式做系統性充實。`,'live ok');
+      state.T=true; updateMaster();
+    }else show(el,'⚠️ 再加一點結構：至少選 4 格，而且要跨 2 個以上發展面向、2 種以上增添方式。','live warn');
+  });
+
+  // Compare deck
+  const cases=[
+    {t:'這個學生已經找到強烈興趣',x:'他已經完成基本工具訓練，現在要決定是否進入真實問題研究。',a:'R',e:'阮儒林最適合，因為核心是依學生準備度與興趣決定充實路徑，尤其是否進 Type III。'},
+    {t:'老師想把能力一步一步練起來',x:'先練基本思考，再練創造性問題解決，最後才讓學生做獨立研究。',a:'P',e:'普渡最像技能樹：前一階段是後一階段的基礎。'},
+    {t:'不想另開一套課',x:'老師想保留原數學課，但把已會內容濃縮，加入高階推理與校外資源。',a:'T',e:'矩陣最適合，因為它是以傳統學科為核心做系統性增添與調整。'},
+    {t:'你要設計一個完整校園熱環境專題',x:'學生先接觸議題、再練工具，最後真的向學校提出改善建議。',a:'R',e:'這個案例最像阮儒林的 Type I → Type II → Type III 路徑。'}
+  ];
+  function renderCase(){
+    const c=cases[state.caseIndex];
+    document.getElementById('caseMeta').textContent=`CASE ${state.caseIndex+1} / ${cases.length}`;
+    document.getElementById('caseTitle').textContent=c.t;
+    document.getElementById('caseText').textContent=c.x;
+    document.getElementById('caseExplain').style.display='none';
+    document.getElementById('nextCase').disabled=true;
+    state.caseLocked=false;
+  }
+  document.querySelectorAll('[data-vote]').forEach(btn=>btn.addEventListener('click',()=>{
+    if(state.caseLocked) return;
+    state.caseLocked=true;
+    const c=cases[state.caseIndex];
+    const ok=btn.dataset.vote===c.a;
+    show(document.getElementById('caseExplain'),(ok?'✅ ':'❌ ')+c.e,ok?'live ok':'live warn');
+    document.getElementById('nextCase').disabled=false;
+  }));
+  document.getElementById('nextCase').addEventListener('click',()=>{
+    if(state.caseIndex<cases.length-1){
+      state.caseIndex++; renderCase();
+    } else {
+      state.C=true; updateMaster();
+      document.getElementById('nextCase').disabled=true;
+      document.getElementById('nextCase').textContent='比較關完成 ✓';
+      show(document.getElementById('caseExplain'),'✅ 你現在不是在背三個模式，而是在判斷：這個教育問題到底需要「選路徑、練技能，還是組課程」。','live ok');
+    }
+  });
+
+  // QR
+  function currentURL(){
+    return location.protocol==='file:' ? 'https://你的帳號.github.io/你的Repo/' : location.href.split('#')[0];
+  }
+  function makeQR(){
+    const input=document.getElementById('urlInput');
+    const url=(input.value||'').trim() || currentURL();
+    input.value=url;
+    document.getElementById('qr').src='https://api.qrserver.com/v1/create-qr-code/?size=320x320&data='+encodeURIComponent(url);
+    document.getElementById('qrMsg').textContent='QR 已更新：'+url;
+  }
+  document.getElementById('qrUpdate').addEventListener('click',makeQR);
+  document.getElementById('urlInput').value=currentURL();
+  makeQR();
+
+  renderCase();
+  updateMatrix();
+  updateMaster();
+})();
+</script>
+</body>
+</html>
